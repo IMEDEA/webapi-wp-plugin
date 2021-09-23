@@ -1,0 +1,302 @@
+/*
+ * Article list styles
+ */
+.article_list {
+	padding: 0;                 /* remove default padding */
+	list-style-type: none;  
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.article_list_item {
+	/*flex: 0 0 10%;              /* don't grow, don't shrink, fixed width of 50% */
+	font-size: 1em;
+	break-inside: avoid-page; /* or 'auto' */
+	margin-bottom: 1.5em;
+	line-height: 1.3em;
+}
+
+.article_list_title {
+	display: block;
+	font-weight: bold;
+}
+.article_list_authors{
+	display: inline;
+}
+
+.article_list_journal{
+	display: inline;
+	padding-left: .5em;
+	font-style: italic;
+}
+.article_list_journal::after { content: '.'; }
+
+.article_list_volume{
+	display: inline;
+	padding-left: .5em;
+}
+.article_list_volume::after { content: '.'; }
+
+.article_list_pages{
+	display: inline;
+	padding-left: .5em;
+	white-space: nowrap;
+}
+.article_list_pages::before { content: 'p. '; }
+
+.article_list_year{
+	display: inline;
+	padding-left: .5em;
+}
+.article_list_year::before { content: ' ('; }
+.article_list_year::after { content: ')'; }
+
+
+/*
+ * Book list styles
+ */
+
+.book_list {
+	padding: 0;                 /* remove default padding */
+	list-style-type: none;   
+}
+
+.book_list_item {
+	flex: 0 0 10%;              /* don't grow, don't shrink, fixed width of 50% */
+	font-size: 1em;
+	break-inside: avoid-page; /* or 'auto' */
+	margin-bottom: 1.5em;
+	line-height: 1.3em;
+}
+
+.book_list_title {
+	display: block;
+	font-weight: bold;
+}
+.book_list_authors{
+	display: inline;
+}
+
+.book_list_journal{
+	display: inline;
+	padding-left: .5em;
+	font-style: italic;
+}
+.book_list_journal::after { content: '.'; }
+
+.book_list_publisher{
+	display: inline;
+	padding-left: .5em;
+	font-style: italic;
+}
+.book_list_pages{
+	display: inline;
+	padding-left: .5em;
+	white-space: nowrap;
+}
+.book_list_pages::before { content: 'p. '; }
+
+.book_list_year{
+	display: inline;
+	padding-left: .5em;
+}
+.book_list_year::before { content: ' ('; }
+.book_list_year::after { content: ')'; }
+
+/*
+ * Book chapter list styles
+ */
+
+.chapter_list {
+	padding: 0;                 /* remove default padding */
+	list-style-type: none;   
+}
+
+.chapter_list_item {
+	flex: 0 0 10%;              /* don't grow, don't shrink, fixed width of 50% */
+	font-size: 1em;
+	break-inside: avoid-page; /* or 'auto' */
+	margin-bottom: 1.5em;
+	line-height: 1.3em;
+}
+
+.chapter_list_title {
+	display: block;
+	font-weight: bold;
+}
+
+.chapter_list_book_title {
+	display: inline;
+	font-style: italic;
+}
+.chapter_list_book_title::before { content: 'In '; font-style: normal;}
+
+.chapter_list_authors{
+	display: inline;
+	padding-left: .5em;
+}
+
+.chapter_list_publisher{
+	display: inline;
+	padding-left: .5em;
+	font-style: italic;
+}
+.chapter_list_pages{
+	display: inline;
+	padding-left: .5em;
+	white-space: nowrap;
+}
+.chapter_list_pages::before { content: 'p. '; }
+
+.chapter_list_year{
+	display: inline;
+	padding-left: .5em;
+}
+.chapter_list_year::before { content: ' ('; }
+.chapter_list_year::after { content: ')'; }
+
+
+
+/*
+ * Pagination bar styles
+ */
+
+.pagination_container {
+	display: block;
+	text-align: right;
+	margin-bottom: 1.5em;
+}
+
+.pagination_container a {
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: 2px;
+	margin-right: 2px;
+	background: #D7EAF5A0;
+}
+
+.selected_page_number {
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: 2px;
+	margin-right: 2px;
+	background: #D7EAF5A0;
+	font-weight: bold;
+	font-size: 1.5em;
+}	
+
+.total_results_count {
+	display: block;
+	font-size: 0.8em;
+}
+
+.total_results_count::before { content: ' ( Total: '; }
+.total_results_count::after { content: ')'; }
+
+.no_results {
+	color: red;
+	font-size: 0.8em;
+	
+}
+
+/*
+ * Publication type selector styles
+ */
+
+.publication_type_selector {
+	display: block;
+	text-align: left;
+	margin-bottom: 1em;
+}
+
+.publication_type_selector a {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 2px;
+	margin-right: 2px;	
+	border-bottom: 1px solid #D7EAF5;
+	border-left: 1px solid #D7EAF5;
+}
+
+.publication_type_selector a.publication_type_selector_selected {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 2px;
+	margin-right: 2px;	
+	background: #D7EAF5A0;
+	border-bottom: 1px solid #D7EAF5;
+	font-weight: bold;
+}
+
+/*
+ * Filters applied display bar styles
+ */
+
+.publication_filter_display {
+	display: block;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.search_filter {
+	display: inline;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-left: 2px;
+	margin-right: 2px;	
+	background: #D7EAF5A0;
+	border-radius: 3px;
+}
+
+/*
+ * Filter form
+ */
+button#toggle_filter {
+	text-align: right;
+}
+
+div#publications_filter_pannel {
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background: #D7EAF5A0;
+}
+
+div.publications_filter_pannel label{
+	display: inline-block;
+	white-space: nowrap;
+	padding-right: 5px;
+}
+
+div.publications_filter_pannel input[type=text]{
+	display: inline;
+	/*padding: 10px;*/
+	border: 2px solid #eee;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	height: 2em;
+	margin-right: 1em;
+}
+div.publications_filter_pannel select{
+	display: inline;
+	/*padding: 10px;*/
+	border: 2px solid #eee;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	height: 2em;
+	margin-right: 1em;
+}
+
+
+#f_title {
+	width: 15em;
+}
+
+#f_year {
+	width: 6em;
+}
+#f_research_unit {
+	width: 15em;
+}
