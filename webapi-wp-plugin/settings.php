@@ -61,3 +61,4 @@ function staff_detail_page_id() {
     echo "<input id='staffdetail_page_id' name='iapi_plugin_options[staff_detail_page_id]' type='text' value='" . esc_attr( $options['staff_detail_page_id'] ) . "' />";
 }
 ?>
+

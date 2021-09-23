@@ -43,41 +43,44 @@ function imedea_publication_list( $atts ){
 
 function get_articles($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $journal, $person_id){
 
-	$count = do_shortcode("[jsoncontentimporter url=".$webapi_url."/articles".
+	$count = getJSONData($webapi_url."/articles".
 		"?research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
 		"&journal=".$journal.
-		"&person_id=".$person_id.
-		" ]{count}[/jsoncontentimporter]");
+		"&person_id=".$person_id)['count'];
 
 	pagination ('articles', $count, $research_unit_id, $year, $title, $person_id);
 	
 	echo "<ul class='article_list'>";
-	echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/articles".
+	$articles = getJSONData($webapi_url."/articles".
 		"?limit=20&offset=".$_GET["api_offset"].
 		"&research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
 		"&journal=".$journal.
-		"&person_id=".$person_id.
-		" basenode=data]<li class='article_list_item'><div class='article_list_title'><a href='?page_id=".$page_detail_id."&publication_id={id}&type=articles'>{title}</a></div>
-		<span class='article_list_authors'>{authors}</span>
-		<span class='article_list_journal'>{journal}</span>
-		<span class='article_list_volume'>{volume}</span>
-		<span class='article_list_pages'>{start_page}-{end_page}</span>
-		<span class='article_list_year'>{year}</span></li> [/jsoncontentimporter]");
+		"&person_id=".$person_id)['data'];
+	foreach ($articles as $ar){
+		if( $doi=$ar['doi'] ) { $link = "https://dx.doi.org/".$doi; }
+		
+		echo "<li class='article_list_item'>
+		<div class='article_list_title'><a href='".$link."'>".$ar['title']."</a></div>
+		<span class='article_list_authors'>".$ar['authors']."</span>
+		<span class='article_list_journal'>".$ar['journal']."</span>
+		<span class='article_list_volume'>".$ar['volume']."</span>
+		<span class='article_list_pages'>".$ar['start_page']."-".$ar['end_page']."</span>
+		<span class='article_list_year'>".$ar['year']."</span></li>";
+	}
 	echo "</ul>";
 }
 
 function get_books($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $person_id){
 	
-	$count = do_shortcode("[jsoncontentimporter url=".$webapi_url."/books".
+	$count = getJSONData($webapi_url."/books".
 		"?research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
-		"&person_id=".$person_id.
-		" ]{count}[/jsoncontentimporter]");
+		"&person_id=".$person_id)['count'];
 
 	pagination ('books', $count,$research_unit_id, $year, $title, $person_id);
 	
@@ -98,12 +101,11 @@ function get_books($webapi_url, $page_detail_id, $research_unit_id, $year, $titl
 
 function get_chapters($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $person_id){
 	
-	$count = do_shortcode("[jsoncontentimporter url=".$webapi_url."/book_chapters".
+	$count = getJSONData($webapi_url."/book_chapters".
 		"?research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
-		"&person_id=".$person_id.
-		" ]{count}[/jsoncontentimporter]");
+		"&person_id=".$person_id)['count'];
 
 	pagination ('book_chapters', $count, $research_unit_id, $year, $title, $person_id);
 	
@@ -215,7 +217,7 @@ function pagination ($type, $count, $research_unit_id, $year, $title, $person_id
 
 function filter_pannel($webapi_url, $type, $research_unit_id, $year, $title){
 	
-	echo "<button onclick='toggle_ipub_filter_pannel()' id='toggle_filter'>Filtrar resultados</button>";
+	echo "<button onclick='toggle_ipub_filter_pannel()' id='toggle_filter'><span class='dashicons dashicons-search'></span>Buscar</button>";
 	echo "<div id='publications_filter_pannel' class='publications_filter_pannel' style='display:none;'>";
 	echo "<form action='' method='GET' name='ipub_filter_form'>";
 	echo "<input type='hidden' name='page_id' value=".$_GET['page_id'].">";
@@ -232,3 +234,4 @@ function filter_pannel($webapi_url, $type, $research_unit_id, $year, $title){
 
 
 ?>
+
