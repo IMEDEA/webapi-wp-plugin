@@ -42,5 +42,57 @@ function JSONCombo($combo_name, $combo_id, $combo_class, $json_url, $json_base, 
 	return $str;
 }
 
-?>
+/*
+ * Truncate author list length
+ * $max: max number of authors (0 do not shorts the list)
+ * $separator: can be ; or ,
+ * $swap: displays I. Surname instead of Surname, I. or vice versa.
+ */
+function fancyAuthors($authors, $max, $separator = ';', $swap = true) {
+	$author_list = explode($separator, $authors);
+	$number_of_authors = count($author_list);
+	$newauthors = "";
+	for ( $i = 0; $i < min($max, $number_of_authors); $i++){
+		$cn = $sn = "";
+		if (';' == $separator){
+			$name_parts = explode(',', $author_list[$i]);
+			if (count($name_parts) > 1) {
+				$cn = $name_parts[1];
+			}
+			$sn = $name_parts[0];
+		} else {
+			$cn = $author_list[$i]; //do nothing
+		}
+		$newauthors .= trim($cn." ".$sn);
+		if ($i < min($max, $number_of_authors)-1) $newauthors .= ", ";
+	}
+	if ($max < $number_of_authors) { 
+		$newauthors .= " et al."; 
+	} else { 
+		$newauthors .= "."; 
+	}
+	return $newauthors;
+}
 
+/*
+ * Truncate string by length
+ */
+function truncate($string, $len, $hard=false) 
+{        
+     if(!$len || $len>strlen($string))
+          return $string;
+     $string = substr($string,0,$len);
+     return $hard?$string:(substr($string,0,strrpos($string,' ')).' ...');
+}
+
+/*
+ * Sanitize DOI
+ */
+function sanitizeDOI($doi) {
+	$newdoi = str_replace("https", "http", $doi);
+	$newdoi = str_replace("http://dx.doi.org/", "", $newdoi);
+	return str_replace("http://doi.org/", "", $newdoi);
+}
+
+
+?>

@@ -1,7 +1,7 @@
 /*
  * Article list styles
  */
-.article_list {
+ .article_list {
 	padding: 0;                 /* remove default padding */
 	list-style-type: none;  
 	margin-left: 30px;
@@ -42,7 +42,7 @@
 	padding-left: .5em;
 	white-space: nowrap;
 }
-.article_list_pages::before { content: 'p. '; }
+.article_list_pages::before { content: 'pp. '; }
 
 .article_list_year{
 	display: inline;
@@ -206,7 +206,7 @@
 .publication_type_selector {
 	display: block;
 	text-align: left;
-	margin-bottom: 1em;
+	margin-bottom: 0px;
 }
 
 .publication_type_selector a {
@@ -310,4 +310,3 @@ div.publications_filter_pannel select{
 #f_research_unit {
 	width: 15em;
 }
-

@@ -3,7 +3,7 @@
 Plugin Name: IMEDEA WEB API 
 Plugin URI: http://imedea.uib-csic.es
 Description: Get data from IMEDEA WEB API
-Version: 0.2
+Version: 0.3
 Author: J.J.E.P.
 Author URI: http://imedea.uib-csic.es
 
@@ -71,4 +71,3 @@ function imedea_publications_js(){
 }
 
 ?>
-

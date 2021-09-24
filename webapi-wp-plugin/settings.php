@@ -37,12 +37,14 @@ function iapi_register_settings() {
 	add_settings_field( 'imedea_webapi_base_url', 'IMEDEA WEBAPI base url', 'imedea_webapi_base_url', 'iapi_plugin', 'api_settings' );
 	add_settings_field( 'pub_detail_page_id', 'Publication details page ID', 'pub_detail_page_id', 'iapi_plugin', 'api_settings' );
 	add_settings_field( 'staff_detail_page_id', 'Staff details page ID', 'staff_detail_page_id', 'iapi_plugin', 'api_settings' );
+	add_settings_field( 'webapi_pagination_length', 'Pagination length', 'webapi_pagination_length', 'iapi_plugin', 'api_settings' );
 }
 
 function iapi_plugin_options_validate( $input ) {
 	$newinput['webapi_url'] = trim( $input['webapi_url'] );
 	$newinput['pub_detail_page_id'] = trim( $input['pub_detail_page_id'] );
 	$newinput['staff_detail_page_id'] = trim( $input['staff_detail_page_id'] );
+	$newinput['webapi_pagination_length'] = trim( $input['webapi_pagination_length'] );
 	return $newinput;
 }
 
@@ -60,5 +62,10 @@ function staff_detail_page_id() {
     $options = get_option( 'iapi_plugin_options' );
     echo "<input id='staffdetail_page_id' name='iapi_plugin_options[staff_detail_page_id]' type='text' value='" . esc_attr( $options['staff_detail_page_id'] ) . "' />";
 }
-?>
 
+function webapi_pagination_length() {
+    $options = get_option( 'iapi_plugin_options' );
+    echo "<input id='webapi_pagination_length' name='iapi_plugin_options[webapi_pagination_length]' type='text' value='" . esc_attr( $options['webapi_pagination_length'] ) . "' />";
+}
+
+?>

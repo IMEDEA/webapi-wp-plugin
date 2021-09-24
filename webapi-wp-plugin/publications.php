@@ -14,7 +14,8 @@ function imedea_publication_list( $atts ){
 	
 	$iapi_plugin_options = get_option('iapi_plugin_options');
 	$webapi_url = $iapi_plugin_options['webapi_url'];
-	$page_detail_id = $ipub_plugin_options['pub_detail_page_id'];
+	$page_detail_id = $iapi_plugin_options['pub_detail_page_id'];
+	$page_length = $iapi_plugin_options['webapi_pagination_length'];
 	
 	ob_start();
 	
@@ -29,19 +30,22 @@ function imedea_publication_list( $atts ){
 	
 	
 	if ($type == 'books') {
-		get_books($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $person_id);
+		$count = get_books($webapi_url, $page_length, $research_unit_id, $year, $title, $person_id);
 	} else if ($type == 'book_chapters') {
-		get_chapters($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $person_id);
+		$count = get_chapters($webapi_url, $page_length, $research_unit_id, $year, $title, $person_id);
 	} else {
-		get_articles($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $journal, $person_id);
+		$count = get_articles($webapi_url, $page_length, $research_unit_id, $year, $title, $journal, $person_id);
 	}
-
+	
+	/* Pagination */
+	pagination ($page_length, $type, $count, $research_unit_id, $year, $title, $person_id);
+	
 	return ob_get_clean();
 	
 }
 
 
-function get_articles($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $journal, $person_id){
+function get_articles($webapi_url, $page_length, $research_unit_id, $year, $title, $journal, $person_id){
 
 	$count = getJSONData($webapi_url."/articles".
 		"?research_unit_id=".$research_unit_id.
@@ -50,31 +54,33 @@ function get_articles($webapi_url, $page_detail_id, $research_unit_id, $year, $t
 		"&journal=".$journal.
 		"&person_id=".$person_id)['count'];
 
-	pagination ('articles', $count, $research_unit_id, $year, $title, $person_id);
+	
 	
 	echo "<ul class='article_list'>";
 	$articles = getJSONData($webapi_url."/articles".
-		"?limit=20&offset=".$_GET["api_offset"].
+		"?limit=".$page_length."&offset=".$_GET["api_offset"].
 		"&research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
 		"&journal=".$journal.
 		"&person_id=".$person_id)['data'];
 	foreach ($articles as $ar){
-		if( $doi=$ar['doi'] ) { $link = "https://dx.doi.org/".$doi; }
-		
+		if( !empty($ar['doi']) ) { $link = "https://dx.doi.org/".sanitizeDOI($ar['doi']); } else { $link = "#"; }
 		echo "<li class='article_list_item'>
-		<div class='article_list_title'><a href='".$link."'>".$ar['title']."</a></div>
-		<span class='article_list_authors'>".$ar['authors']."</span>
-		<span class='article_list_journal'>".$ar['journal']."</span>
-		<span class='article_list_volume'>".$ar['volume']."</span>
-		<span class='article_list_pages'>".$ar['start_page']."-".$ar['end_page']."</span>
-		<span class='article_list_year'>".$ar['year']."</span></li>";
+			<div class='article_list_title'><a href='".$link."'>".$ar['title']."</a></div>
+			<span class='article_list_authors'>".fancyAuthors($ar['authors'], 3, ';')."</span>
+			<span class='article_list_journal'>".ucfirst(strtolower($ar['journal']))."</span>".
+			(!empty($ar['volume'])?("<span class='article_list_volume'>".$ar['volume']."</span>"):"").
+			"<span class='article_list_pages'>".$ar['start_page'].
+			(!empty($ar['end_page'])?("-".$ar['end_page']):"")."</span>
+			<span class='article_list_year'>".$ar['year']."</span></li>";
 	}
 	echo "</ul>";
+	
+	return $count;
 }
 
-function get_books($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $person_id){
+function get_books($webapi_url, $page_length, $research_unit_id, $year, $title, $person_id){
 	
 	$count = getJSONData($webapi_url."/books".
 		"?research_unit_id=".$research_unit_id.
@@ -82,24 +88,28 @@ function get_books($webapi_url, $page_detail_id, $research_unit_id, $year, $titl
 		"&title=".$title.
 		"&person_id=".$person_id)['count'];
 
-	pagination ('books', $count,$research_unit_id, $year, $title, $person_id);
 	
 	echo "<ul class='book_list'>";
-	echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/books".
-		"?limit=20&offset=".$_GET["api_offset"].
+	$books = getJSONData($webapi_url."/books".
+		"?limit=".$page_length."&offset=".$_GET["api_offset"].
 		"&research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
-		"&person_id=".$person_id.
-		" basenode=data]<li class='book_list_item'>
-		<div class='book_list_title'><a href='?page_id=".$page_detail_id."&publication_id={id}&type=books'>{title}</a></div>
-		<span class='book_list_authors'>{authors}</span>
-		<span class='book_list_publisher'>{publisher}</span>
-		<span class='book_list_year'>{year}</span></li> [/jsoncontentimporter]");
+		"&person_id=".$person_id)['data'];
+	foreach ($books as $bk) {
+		if( !empty($bk['doi']) ) { $link = "https://dx.doi.org/".sanitizeDOI($bk['doi']); } else { $link = "#"; }
+		echo "<li class='book_list_item'>
+			<div class='book_list_title'><a href='".$link."'>".$bk['title']."</a></div>
+			<span class='book_list_authors'>".fancyAuthors($bk['authors'], 3, ';')."</span>
+			<span class='book_list_publisher'>".$bk[publisher]."</span>
+			<span class='book_list_year'>".$bk['year']."</span></li>";
+	}
 	echo "</ul>";
+	
+	return $count;
 }
 
-function get_chapters($webapi_url, $page_detail_id, $research_unit_id, $year, $title, $person_id){
+function get_chapters($webapi_url, $page_length, $research_unit_id, $year, $title, $person_id){
 	
 	$count = getJSONData($webapi_url."/book_chapters".
 		"?research_unit_id=".$research_unit_id.
@@ -107,22 +117,28 @@ function get_chapters($webapi_url, $page_detail_id, $research_unit_id, $year, $t
 		"&title=".$title.
 		"&person_id=".$person_id)['count'];
 
-	pagination ('book_chapters', $count, $research_unit_id, $year, $title, $person_id);
+	//pagination ($page_length, 'book_chapters', $count, $research_unit_id, $year, $title, $person_id);
 	
 	echo "<ul class='chapter_list'>";
-	echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/book_chapters".
-		"?limit=20&offset=".$_GET["api_offset"].
+	
+	$chapters = getJSONData($webapi_url."/book_chapters".
+		"?limit=".$page_length."&offset=".$_GET["api_offset"].
 		"&research_unit_id=".$research_unit_id.
 		"&year=".$year.
 		"&title=".$title.
-		"&person_id=".$person_id.
-		" basenode=data]<li class='chapter_list_item'>
-		<div class='chapter_list_title'><a href='?page_id=".$page_detail_id."&publication_id={id}&type=book_chapters'>{title}</a></div>
-		<span class='chapter_list_book_title'>{book_title}</span>
-		<span class='chapter_list_authors'>{authors}</span>
-		<span class='chapter_list_publisher'>{publisher}</span>
-		<span class='chapter_list_year'>{year}</span></li> [/jsoncontentimporter]");
+		"&person_id=".$person_id)['data'];
+	foreach ($chapters as $ch) {
+		if( !empty($ch['doi']) ) { $link = "https://dx.doi.org/".sanitizeDOI($ch['doi']); } else { $link = "#"; }
+		echo "<li class='chapter_list_item'>
+			<div class='chapter_list_title'><a href='".$link."'>".$ch['title']."</a></div>
+			<span class='chapter_list_book_title'>".$ch['book_title']."</span>
+			<span class='chapter_list_authors'>".fancyAuthors($ch['authors'], 3, ';')."</span>
+			<span class='chapter_list_publisher'>".$ch[publisher]."</span>
+			<span class='chapter_list_year'>".$ch['year']."</span></li>";
+	}
 	echo "</ul>";
+	
+	return $count;
 }
 
 
@@ -176,9 +192,9 @@ function show_filters($research_unit_id, $year, $title, $journal, $person_id){
  * Display pagination bar
  */
 
-function pagination ($type, $count, $research_unit_id, $year, $title, $person_id){
+function pagination ($page_length, $type, $count, $research_unit_id, $year, $title, $person_id){
 	
-	if ( isset($_GET['limit']) )      { $limit = $_GET['limit']; } else { $limit = 20; }
+	if ( isset($_GET['limit']) )      { $limit = $_GET['limit']; } else { $limit = $page_length; }
 	if ( isset($_GET['api_offset']) ) { $offset = $_GET['api_offset']; } else { $offset = 0; }
 	$originalparams="";
 	
@@ -234,4 +250,3 @@ function filter_pannel($webapi_url, $type, $research_unit_id, $year, $title){
 
 
 ?>
-
