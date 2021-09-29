@@ -65,7 +65,11 @@ function get_articles($webapi_url, $page_length, $research_unit_id, $year, $titl
 		"&journal=".$journal.
 		"&person_id=".$person_id)['data'];
 	foreach ($articles as $ar){
-		if( !empty($ar['doi']) ) { $link = "https://dx.doi.org/".sanitizeDOI($ar['doi']); } else { $link = "#"; }
+		if ( !empty($ar['doi']) ) { 
+			$link = "https://dx.doi.org/".sanitizeDOI($ar['doi']); 
+		} elseif ( !empty($ar['url']) ) {
+			$link = $ar['url'];
+		} else { $link = "#"; }
 		echo "<li class='article_list_item'>
 			<div class='article_list_title'><a href='".$link."'>".$ar['title']."</a></div>
 			<span class='article_list_authors'>".fancyAuthors($ar['authors'], 3, ';')."</span>
@@ -231,15 +235,15 @@ function pagination ($page_length, $type, $count, $research_unit_id, $year, $tit
  * Display Filter pannel
  */
 
-function filter_pannel($webapi_url, $type, $research_unit_id, $year, $title){
-	
+function filter_pannel($webapi_url, $type, $research_unit_id, $year, $title){	
 	echo "<button onclick='toggle_ipub_filter_pannel()' id='toggle_filter'><span class='dashicons dashicons-search'></span>Buscar</button>";
 	echo "<div id='publications_filter_pannel' class='publications_filter_pannel' style='display:none;'>";
 	echo "<form action='' method='GET' name='ipub_filter_form'>";
 	echo "<input type='hidden' name='page_id' value=".$_GET['page_id'].">";
 	echo "<input type='hidden' name='type' value=".$type.">";
 	echo "<label for='title'>El título contiene</label><input type='text' name='title' value='".$title."' id='f_title'>";
-	echo "<label for='year'>Del año</label><input type='text' name='year' value='".$year."' id='f_year'>";
+	echo "<label for='year'>Del año</label>"; //<input type='text' name='year' value='".$year."' id='f_year'>";
+	echo yearCombo('year', 'f_year', 'f_combo', '2000', null, $year);
 	echo "<label for='research_unit_id'>Del grupo de investigación</label>";
 	echo JSONCombo('research_unit_id', 'f_research_unit', 'f_combo', $webapi_url . '/research_units', 'data', 'id', $research_unit_id, 'name_es');
 	echo "<input type='submit' name='ipub_filter_btn' value='Filtrar'>";

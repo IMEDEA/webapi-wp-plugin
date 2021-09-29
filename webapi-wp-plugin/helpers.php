@@ -21,7 +21,7 @@ function getJSONData($url){
  */
  
 function selectOptionSelected($opt, $val) {
-	if ( $opt === $val) {
+	if ( $opt == $val) {
 		return "selected";
 	} else {
 		return "";
@@ -41,6 +41,22 @@ function JSONCombo($combo_name, $combo_id, $combo_class, $json_url, $json_base, 
 	$str .= "</select>";
 	return $str;
 }
+
+/*
+ * Return combo field html for Year selection
+ */
+
+function yearCombo($name, $f_type, $f_class, $start_year, $end_year, $value = ''){
+	if ( $end_year == null || empty($end_year) ) { $end_year= date("Y"); }
+	$html = "<select name='".$name."' id='".$f_type."' class='".$f_class."'>";
+	$html .= "<option value='' ".selectOptionSelected('', $value).">&nbsp;</option>";
+	for ($y = $end_year; $y >= $start_year; $y-- ){
+		$html .= "<option value='".$y."' ".selectOptionSelected($y, $value).">".$y."</option>";
+	}
+	$html .= "</select>";
+	return $html;
+}
+
 
 /*
  * Truncate author list length
