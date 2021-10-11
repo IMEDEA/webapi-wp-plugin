@@ -7,77 +7,69 @@ function imedea_staff_list( $atts ){
 			'type' => $_GET["api_type"],
 			'research_unit_id' => '',
 			'organizational_unit_id' =>'',
+			'organizational_unit_type' => '',
 			'extended' => 'True'
 		), $atts));
 
 		$iapi_plugin_options = get_option('iapi_plugin_options');
 		$webapi_url = $iapi_plugin_options['webapi_url'];
-		$page_detail_id = $ipub_plugin_options['staff_detail_page_id'];
+		$page_detail_id = $iapi_plugin_options['staff_detail_page_id'];
 		
 		ob_start();
 
-	if ($type=='permanent'){
-		list_permanent_staff($webapi_url, $page_detail_id, $research_unit_id, $organizational_unit_id, $extended);
-	} elseif ($type=='hired'){
-		list_hired_staff($webapi_url, $page_detail_id, $research_unit_id, $organizational_unit_id, $extended);
-	} 
+		list_staff($type, $webapi_url, $page_detail_id, $research_unit_id, $organizational_unit_id, $organizational_unit_type, $extended);
+
 		return ob_get_clean();
 
 }
 
-function list_permanent_staff($webapi_url, $page_detail_id, $ru_id, $ou_id, $extended){
+function list_staff($type, $webapi_url, $page_detail_id, $ru_id, $ou_id, $ou_type, $extended){
+
+	if ( $type == 'permanent' ) {
+		//print $webapi_url."/people?type=permanent&department_id=".$ou_id."&department_type=".$ou_type."&research_unit_id=".$ru_id;
+		$staff = getJSONData($webapi_url."/people?type=permanent&department_id=".$ou_id."&department_type=".$ou_type."&research_unit_id=".$ru_id)['data'];
+		$type_class = "permanent_staff_list_item";
+	} else {
+		$staff = getJSONData($webapi_url."/people?type=temporal&department_id=".$ou_id."&department_type=".$ou_type."&research_unit_id=".$ru_id)['data'];
+		$type_class = "hired_staff_list_item";
+	}
+
 	if ($extended=='True') {
 		echo "<ul class='staff_list'>";
-		echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/people?type=permanent&department_id=".$ou_id."&research_unit_id=".$ru_id." basenode=data]
-			<li class='permanent_staff_list_item'>
-			<div class='staff_list_photo_container'><a href='?page_id=".$page_detail_id."&person_id={id}&show_pub_list=false&show_pro_list=false'><img src='{photo_url_small}' class='staff_list_photo'></a></div>
-			<div class='staff_list_name'><a href='?page_id=1271&person_id={id}&show_pub_list=false&show_pro_list=false'>{name}</a></div>
-			<div class='staff_list_phones'>{subloop-array:phones:10}{0}{1:ifNotEmptyAddLeft:,  }{/subloop-array:phones}</div>
-			<div class='staff_list_email'><a href='mailto:{email}'>{email}</a></div>
-			<div class='staff_list_ru'>{organizational_unit_name_es}</div>
-			</li>
-			[/jsoncontentimporter]");
+		foreach( $staff as $person ){
+			echo "<li class='".$type_class."'>
+			<div class='staff_list_photo_container'>
+				<a href='?page_id=".$page_detail_id."&person_id=".$person['id']."&show_pub_list=false&show_pro_list=false'>
+					<img src=".$person['photo_url_small']." class='staff_list_photo'>
+				</a>
+			</div>
+			<div class='staff_list_name'><a href='?page_id=".$page_detail_id."&person_id=".$person['id']."&show_pub_list=false&show_pro_list=false'>".nameSurname($person['name'])."</a></div>";
+			if (sizeof($person['phones']) > 0) {
+				echo "<div class='staff_list_phones'><span class='dashicons dashicons-phone'></span> ";
+				foreach( $person['phones'] as $p => $phone ){
+					echo $phone;
+					if ( isset($phones[$p + 1]) ) echo ", ";
+				}
+				echo "</div>"; 
+			}
+			echo "<div class='staff_list_email'><a href='mailto:".$person['email']."'>".$person['email']."</a></div>
+			<div class='staff_list_ru'>".$person['organizational_unit_name_es']."</div>
+			<div class='staff_list_room'>".$person['room']."</div>
+			</li>";
+		}
 		echo "</ul>";
 	} else {
 		echo "<ul class='staff_list_simple'>";
-		echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/people?type=permanent&department_id=".$ou_id."&research_unit_id=".$ru_id." basenode=data]
-			<li class='permanent_staff_list_item_simple'>
-			<div class='staff_list_name_simple'><a href='?page_id=".$page_detail_id."&person_id={id}&show_pub_list=false&show_pro_list=false'>{name}</a></div>
-			</li>
-			[/jsoncontentimporter]");
+		foreach( $staff as $person ){
+			echo "<li class='".$type_class."_simple'>
+			<div class='staff_list_name_simple'>
+				<a href='?page_id=".$page_detail_id."&person_id=".$person['id']."&show_pub_list=false&show_pro_list=false'>".$person['name']."</a>
+			</div>
+			</li>";
 		echo "</ul>";
+		}
 	}
 }
-
-function list_hired_staff($webapi_url, $page_detail_id, $ru_id, $ou_id, $extended){
-	
-	if ($extended=='True') {
-		echo "<ul class='staff_list'>";
-		echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/people?type=temporal&department_id=".$ou_id."&research_unit_id=".$ru_id." basenode=data]
-			<li class='hired_staff_list_item'>
-			<div class='staff_list_photo_container'><a href='?page_id=".$page_detail_id."&person_id={id}&show_pub_list=false&show_pro_list=false'><img src='{photo_url_small}' class='staff_list_photo'></a></div>
-			<div class='staff_list_name'><a href='?page_id=1271&person_id={id}&show_pub_list=false&show_pro_list=false'>{name}</a></div>
-			<div class='staff_list_phones'>{subloop-array:phones:10}{0}{1:ifNotEmptyAddLeft:,  }{/subloop-array:phones}</div>
-			<div class='staff_list_email'><a href='mailto:{email}'>{email}</a></div>
-			<div class='staff_list_ru'>{organizational_unit_name_es}</div>
-			</li>
-			[/jsoncontentimporter]");
-		echo "</ul>";
-	} else {
-		echo "<ul class='staff_list_simple'>";
-		echo do_shortcode("[jsoncontentimporter url=".$webapi_url."/people?type=temporal&department_id=".$ou_id."&research_unit_id=".$ru_id." basenode=data]
-			<li class='hired_staff_list_item_simple'>
-			<div class='staff_list_name_simple'><a href='?page_id=".$page_detail_id."&person_id={id}&show_pub_list=false&show_pro_list=false'>{name}</a></div>
-			</li>
-			[/jsoncontentimporter]");
-		echo "</ul>";
-	}
-	
-}
-
-
-
-
 
 /*
  * Display detail of a person identified by id.

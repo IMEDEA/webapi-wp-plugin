@@ -110,5 +110,20 @@ function sanitizeDOI($doi) {
 	return str_replace("http://doi.org/", "", $newdoi);
 }
 
+/*
+ * Change string "Surname, Name" to "Name Surname"
+ */
+
+function nameSurname($surname_name) {
+	$name_parts = explode(',', $surname_name);
+	if ( sizeof($name_parts) >= 2 ) {
+		$new_name = trim($name_parts[1]) . " " . trim($name_parts[0]) ;
+	} else if ( sizeof($name_parts) == 1 ){
+		$new_name = $name_parts[0];
+	} else {
+		$new_name = '';
+	}
+	return $new_name;
+}
 
 ?>

@@ -42,7 +42,7 @@
 	padding-left: .5em;
 	white-space: nowrap;
 }
-.article_list_pages::before { content: 'pp. '; }
+.article_list_pages::before { content: 'pp. '; font-style: italic;}
 
 .article_list_year{
 	display: inline;
@@ -299,6 +299,9 @@ div.publications_filter_pannel select{
 	margin-right: 1em;
 }
 
+div.publications_filter_pannel label, input{
+	display: block;
+}
 
 #f_title {
 	width: 15em;

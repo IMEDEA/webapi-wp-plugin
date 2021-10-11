@@ -3,7 +3,7 @@
 Plugin Name: IMEDEA WEB API 
 Plugin URI: http://imedea.uib-csic.es
 Description: Get data from IMEDEA WEB API
-Version: 0.3
+Version: 0.5
 Author: J.J.E.P.
 Author URI: http://imedea.uib-csic.es
 
@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 include_once(plugin_dir_path( __FILE__ ) . 'helpers.php');
 include_once(plugin_dir_path( __FILE__ ) . 'staff.php');
 include_once(plugin_dir_path( __FILE__ ) . 'publications.php');
+include_once(plugin_dir_path( __FILE__ ) . 'projects.php');
 include_once(plugin_dir_path( __FILE__ ) . 'settings.php');
 
 add_action( 'imedea_staff_list', 'imedea_staff_list' );
@@ -36,6 +37,9 @@ add_shortcode('imedea_staff_detail', 'imedea_staff_detail');
 add_action( 'imedea_publication_list', 'imedea_publication_list' );
 add_shortcode('imedea_publication_list', 'imedea_publication_list');
 
+
+add_action( 'imedea_project_list', 'imedea_project_list' );
+add_shortcode('imedea_project_list', 'imedea_project_list');
 
 add_action( 'init', 'register_shortcodes');
 
@@ -59,6 +63,11 @@ function imedea_staff_styles(){
 add_action( 'wp_enqueue_scripts', 'imedea_publications_styles' );
 function imedea_publications_styles(){
 	wp_enqueue_style('imedea_publications_styles', plugin_dir_url( __FILE__ ) . 'css/imedea-publications.css' );
+}
+
+add_action( 'wp_enqueue_scripts', 'imedea_projects_styles' );
+function imedea_projects_styles(){
+	wp_enqueue_style('imedea_projects_styles', plugin_dir_url( __FILE__ ) . 'css/imedea-projects.css' );
 }
 
 /*

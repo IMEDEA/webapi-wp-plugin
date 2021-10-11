@@ -1,0 +1,140 @@
+/*
+ * Project list styles
+ */
+ .project_list {
+	padding: 0;                 /* remove default padding */
+	list-style-type: none;  
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.project_list_item {
+	/*flex: 0 0 10%;              /* don't grow, don't shrink, fixed width of 50% */
+	font-size: 1em;
+	break-inside: avoid-page; /* or 'auto' */
+	margin-bottom: 1em;
+	line-height: 1.3em;
+	/*border-bottom: 2px solid #00A8E750;*/
+	padding-bottom: 0.5em;
+	/*padding-top: 0.5em;*/
+	/*background: #00A8E708;*/
+	border-radius: 6px;
+}
+
+.project_list_title {
+	display: block;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #00A8E7;
+	/*text-transform: uppercase;*/
+	padding-left: 1em;
+	/*background: #f0f0f0;*/
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.project_list_title:hover {
+	display: block;
+	/*font-weight: bold;*/
+	font-size: 1.2em;
+	color: #000;
+	/*text-transform: uppercase;*/
+	padding-left: 1em;
+	cursor: pointer;
+}
+
+.project_list_code {
+	display: inline;
+	/*padding-left: .5em;*/
+	/*font-size: 0.8em;*/
+}
+.project_list_acronym {
+	display: inline;
+	padding-left: .5em;
+	/*font-size: 0.8em;*/
+}
+.project_list_type {
+	display: inline;
+	padding-left: .5em;
+	/*font-size: 0.8em;*/
+}
+.project_list_code::before { content: ' [ Cod. '; }
+.project_list_acronym::after { content: ' ]'; }
+
+
+.expander {
+	display: inline;
+	margin-left: 1em;
+	padding-left: .5em;
+	padding-right: .5em;
+	border: none;
+	/*background: #00A8E700;*/
+	border-radius: 4px;
+	color: #000;
+}
+.expander:hover {	
+	/*background: #00A8E7;*/
+	color: #00A8E7;
+}
+
+.project_list_expanded {
+	padding-left: 4em;
+	padding-right: 4em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-left: 3px solid #00A8E750;
+	border-right: 1px solid #00A8E750;
+	border-radius: 10px;
+	background: #fff;
+}
+
+.project_list_description {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	text-align: justify;
+}
+
+.project_list_image {
+	display: block;
+	height: 80px;
+	/*border: 1px solid #000;*/
+	margin-bottom: 20px;
+}
+
+.project_list_link {
+	padding-right: 1em;
+}
+
+.project_list_funder {
+	padding-right: 1em;
+}
+
+.project_filter_pannel {
+	display: flex; 
+	justify-content: flex-end;
+}
+
+#f_pr_title {
+	width: 15em;
+	/*padding: 0;*/
+	margin-right: 0.5em;
+	height: 1.5em;
+	color: #505050;
+}
+
+#project_filter_btn {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: none;	
+	cursor: pointer;
+	color: #505050;
+}
+#f_project_combo {
+	height: 1.5em;
+	margin-right: 0.5em;
+}
