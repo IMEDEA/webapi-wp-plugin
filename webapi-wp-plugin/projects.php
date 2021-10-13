@@ -54,23 +54,16 @@ function get_projects($webapi_url, $page_length, $research_unit_id, $year, $type
 		"&name=".$title.
 		"&person_id=".$person_id)['data'];
 	foreach ($projects as $pr){
-		if (stripos($pr['code'], '(CTA') > 0){
-			$code = substr($pr['code'], 0, stripos($pr['code'], '(CTA'));
-		} else {
-			$code = $pr['code'];
-		}
-		if (stripos($pr['acronym'], '(CTA')){
-			$acronym = substr($pr['acronym'], 0, stripos($pr['acronym'], '(CTA'));
-		} else {
-			$acronym = $pr['acronym'];			
-		}
-		
+		$code = clearCTA($pr['code']);
+		$acronym = clearCTA($pr['acronym']);			
+	
 		echo "<li class='project_list_item'>";
-		echo "<div class='project_list_title' onclick=\"toggle_div_by_id('project_list_expanded_".$pr['id']."');\">".$pr['name']." <span class='dashicons dashicons-arrow-down-alt2'></span> </div>";
-		echo "<div class='project_list_expanded' id='project_list_expanded_".$pr['id']."' style='display:none;'>";		
-		if ( !empty($pr['related_logo']) ){
+		//if ( !empty($pr['related_logo']) ){
 			echo "<div class='project_list_image_container'><img src='".$pr['related_logo']."' class='project_list_image'></div>";	
-		}
+		//}
+		echo "<div class='project_list_title' onclick=\"toggle_div_by_id('project_list_expanded_".$pr['id']."');\">".$pr['name']."  </div>";
+		echo "<div class='project_list_expanded' id='project_list_expanded_".$pr['id']."' style='display:none;'>";		
+		
 		echo "<div class='project_list_code'>".$code."</div>";
 		echo "<div class='project_list_acronym'>".$acronym."</div>";
 		echo "<div class='project_list_duration'><span class='dashicons dashicons-clock'></span> Duración: ".$pr['duration']."</div>";
@@ -114,7 +107,7 @@ function project_filter_pannel($webapi_url, $type, $research_unit_id, $year, $ti
 	echo "<input type='text' name='title' value='".$title."' id='f_pr_title'>";
 	echo "<button id='project_filter_btn'>";
 	echo "<span class='dashicons dashicons-search'></span>Buscar";
-	echo "</button>";
+	echo "</button id='project_filter_btn'>";
 	//echo "<input type='submit' name='project_filter_btn' id='project_filter_btn' value='Buscar'>";
 	echo "</form>";
 	echo "</div>";

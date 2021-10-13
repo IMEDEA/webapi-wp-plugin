@@ -25,11 +25,11 @@ function imedea_publication_list( $atts ){
 	
 	ob_start();
 	
+	/* search pannel */
+	publication_filter_pannel($webapi_url, $type, $research_unit_id, $project_id, $year, $title);
+	
 	/* type selector */
 	type_selector($type, $research_unit_id, $year, $title, $person_id, $project_id);
-	
-	/* search pannel */
-	publication_filter_pannel($webapi_url, $type, $research_unit_id, $year, $title);
 	
 	/* show applied filters */
 	//show_filters($research_unit_id, $year, $title, $journal, $person_id);
@@ -279,7 +279,7 @@ function pagination ($page_length, $type, $count, $research_unit_id, $year, $tit
  * Display Filter pannel
  */
 
-function publication_filter_pannel($webapi_url, $type, $research_unit_id, $year, $title){	
+function publication_filter_pannel($webapi_url, $type, $research_unit_id, $project_id, $year, $title){	
 	//echo "<button onclick='toggle_ipub_filter_pannel()' id='toggle_filter'><span class='dashicons dashicons-search'></span>Buscar</button>";
 	echo "<div id='publications_filter_pannel' class='publications_filter_pannel' style=''>";
 	echo "<form action='' method='GET' name='ipub_filter_form'>";
@@ -292,13 +292,17 @@ function publication_filter_pannel($webapi_url, $type, $research_unit_id, $year,
 	echo "<label for='year'>Del año</label>"; 
 	echo yearCombo('year', 'f_year', 'f_combo', '2000', null, $year);
 	echo "</div>";
+	echo "<div class='ifilter_field'>";
 	echo "<label for='research_unit_id'>Del grupo de investigación</label>";
 	echo JSONCombo('research_unit_id', 'f_research_unit', 'f_combo', $webapi_url . '/research_units', 'data', 'id', $research_unit_id, 'name_es');
+	echo "</div>";
+	echo "<div class='ifilter_field'>";
 	echo "<label for='project_id'>Del proyecto</label>";
 	echo JSONCombo('project_id', 'f_project', 'f_combo', $webapi_url . '/projects', 'data', 'id', $project_id, 'acronym');
+	echo "</div>";
 	//echo comboProject(false, $project_id, 'f_project_combo');
 	//echo "<input type='submit' name='ipub_filter_btn' value='Filtrar'>";
-	echo "<button><span class='dashicons dashicons-search'></span>Buscar</button>";
+	echo "<button id='ipub_filter_btn'><span class='dashicons dashicons-search'></span>Buscar</button>";
 	echo "</form>";
 	echo "</div>";
 }

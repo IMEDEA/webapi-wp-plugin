@@ -36,7 +36,7 @@ function JSONCombo($combo_name, $combo_id, $combo_class, $json_url, $json_base, 
 	$str = "<select name='".$combo_name."' id='".$combo_id."' class='".$combo_class."'>";
 	$str .= "<option value='' ".selectOptionSelected('', $option_value).">&nbsp;</option>";
 	foreach ( getJSONData($json_url)[$json_base] as $opt) {
-		$str .= "<option value='".$opt[$option_key]."' ".selectOptionSelected($opt[$option_key], $option_value).">".$opt[$option_text]."</option>";
+		$str .= "<option value='".$opt[$option_key]."' ".selectOptionSelected($opt[$option_key], $option_value).">".clearCTA($opt[$option_text])."</option>";
 	}
 	$str .= "</select>";
 	return $str;
@@ -124,6 +124,20 @@ function nameSurname($surname_name) {
 		$new_name = '';
 	}
 	return $new_name;
+}
+
+/**
+ * Clear CTA references at the end os string
+ */
+function clearCTA($text){
+	if (stripos($text, '(CTA') > 0){
+		$text = substr($text, 0, stripos($text, '(CTA'));
+	} else if (stripos($text, ' CTA') > 0){
+		$text = substr($text, 0, stripos($text, ' CTA'));
+	} else if (stripos($text, ' (') > 0){
+		$text = substr($text, 0, stripos($text, ' ('));
+	}
+	return $text;
 }
 
 ?>

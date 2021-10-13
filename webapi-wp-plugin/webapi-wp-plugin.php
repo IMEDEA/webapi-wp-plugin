@@ -45,13 +45,6 @@ add_action( 'init', 'register_shortcodes');
 
 
 /*
- * Settings 
- */
- 
-add_action( 'admin_menu', 'iapi_add_settings_page' );
-add_action( 'admin_init', 'iapi_register_settings' );
-
-/*
  * CSS 
  */
 

@@ -1,7 +1,11 @@
 <?php
-/* 
+/** 
  * Settings page 
  */
+ 
+add_action( 'admin_menu', 'iapi_add_settings_page' );
+add_action( 'admin_init', 'iapi_register_settings' );
+
 
 function iapi_add_settings_page() {
   add_options_page(
