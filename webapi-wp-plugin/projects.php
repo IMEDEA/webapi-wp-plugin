@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Projects functions
+ * Current projects by default
+ */
+
 function imedea_project_list( $atts ){
 	// get attibutes and set defaults
 	extract(shortcode_atts(array(
@@ -9,26 +15,24 @@ function imedea_project_list( $atts ){
 		'search' => $_GET["search"],
 		'title'=> $_GET["title"],
 		'person_id' => $_GET["person_id"],
+		'showall' => $_GET["showall"],
 	), $atts));
 	
 	$iapi_plugin_options = get_option('iapi_plugin_options');
 	$webapi_url = $iapi_plugin_options['webapi_url'];
-	$page_detail_id = $iapi_plugin_options['prj_detail_page_id'];
+	//$page_detail_id = $iapi_plugin_options['prj_detail_page_id'];
 	$page_length = $iapi_plugin_options['webapi_pagination_length'];
 	
 	ob_start();
-	
-	/* type selector */
-	//type_selector($type, $research_unit_id, $year, $title, $person_id);
 	
 	/* search pannel */
 	project_filter_pannel($webapi_url, $type, $research_unit_id, $year, $title);
 	
 	/* show applied filters */
-	//show_filters($research_unit_id, $year, $title, $journal, $person_id);
+	show_project_filters($person_id);
 	
 	
-	$count = get_projects($webapi_url, $page_length, $research_unit_id, $year, $type, $title, $person_id);
+	$count = get_projects($webapi_url, $page_length, $research_unit_id, $year, $type, $title, $person_id, $showall);
 	
 	/* Pagination */
 	pagination ($page_length, $type, $count, $research_unit_id, $year, $title, $person_id, null);
@@ -37,12 +41,13 @@ function imedea_project_list( $atts ){
 	
 }
 
-function get_projects($webapi_url, $page_length, $research_unit_id, $year, $type, $title, $person_id){
+function get_projects($webapi_url, $page_length, $research_unit_id, $year, $type, $title, $person_id, $showall){
 	$count = getJSONData($webapi_url."/projects".
 		"?research_unit_id=".$research_unit_id.
 		"&type=".$type.			
 		"&name=".$title.
-		"&person_id=".$person_id)['count'];
+		"&person_id=".$person_id.
+		"&showall=".$showall)['count'];
 
 	
 	
@@ -52,7 +57,8 @@ function get_projects($webapi_url, $page_length, $research_unit_id, $year, $type
 		"&research_unit_id=".$research_unit_id.
 		"&type=".$type.		
 		"&name=".$title.
-		"&person_id=".$person_id)['data'];
+		"&person_id=".$person_id.
+		"&showall=".$showall)['data'];
 	foreach ($projects as $pr){
 		$code = clearCTA($pr['code']);
 		$acronym = clearCTA($pr['acronym']);			
@@ -126,6 +132,16 @@ function comboProject($showall=false, $selected='', $style_id='f_project_combo')
 	echo "</select>";	
 }
 
+/*
+ * Display filters applied to search
+ */
 
+function show_project_filters($person_id){
+	echo "<div class='project_filter_display'>";	
+	if ($person_id) {
+		echo "<span class='project_search_filter'>Proyectos de ".getStaffName($person_id)."</span>";
+	}
+    echo "</div>";
+}
 
 ?>

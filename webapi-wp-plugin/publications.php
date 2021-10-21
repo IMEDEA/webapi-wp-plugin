@@ -25,14 +25,15 @@ function imedea_publication_list( $atts ){
 	
 	ob_start();
 	
+
+	/* show applied filters */
+	show_publication_filters($research_unit_id, $year, $title, $journal, $person_id);	
+
 	/* search pannel */
 	publication_filter_pannel($webapi_url, $type, $research_unit_id, $project_id, $year, $title);
-	
+
 	/* type selector */
 	type_selector($type, $research_unit_id, $year, $title, $person_id, $project_id);
-	
-	/* show applied filters */
-	//show_filters($research_unit_id, $year, $title, $journal, $person_id);
 	
 	
 	if ($type == 'books') {
@@ -208,13 +209,18 @@ function selector_selected_tag ($type, $value) {
  * Display filters applied to search
  */
 
-function show_filters($research_unit_id, $year, $title, $journal, $person_id){
+function show_publication_filters($research_unit_id, $year, $title, $journal, $person_id){
 	echo "<div class='publication_filter_display'>";	
 	/*if ($journal) { echo "<span class='search_filter'>La revista contiene = ".$title."</span>";}*/
-	if ($research_unit_id) { echo "<span class='search_filter'>Del grupo de investigación  = ".$research_unit_id."</span>";}
-	if ($person_id) { echo "<span class='search_filter'>Autor  = ".$person_id."</span>";}
-    if ($year) { echo "<span class='search_filter'>Año = ".$year."</span>";}
-	if ($title) { echo "<span class='search_filter'>El título contiene = ".$title."</span>";}
+	//if ($research_unit_id) { echo "<span class='search_filter'>Del grupo de investigación  = ".$research_unit_id."</span>";}
+	//if ($person_id) { echo "<span class='search_filter'>Autor  = ".$person_id."</span>";}
+    //if ($year) { echo "<span class='search_filter'>Año = ".$year."</span>";}
+	//if ($title) { echo "<span class='search_filter'>El título contiene = ".$title."</span>";}
+	//
+	if ($person_id) {
+		
+		echo "<span class='search_publication_filter'>Publicaciones de ".getStaffName($person_id)."</span>";
+	}
     echo "</div>";
 }
 

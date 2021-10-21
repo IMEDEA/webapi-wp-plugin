@@ -162,3 +162,100 @@ div.staff_list_name_simple a:hover{
 	/*font-weight: bold;*/
 }
 
+/********************************
+ * Details page
+ */
+
+.staff_details_container {
+	margin-top: 50px;
+	padding-left: 20px;
+	padding-right: 20px;
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: max-content 1fr max-content;
+	grid-template-rows: auto;
+	align-items: start;
+	justify-content: stretch;
+}
+
+.staff_details_photo {
+	border: 1px solid #a0a0a0;
+	background: #fff;
+	padding: 10px;
+	display: block;
+	float: left;
+	width: 200px;
+	grid-column: 1;
+	grid-row: 1 ;
+}
+
+.staff_details_info_container {
+	display: block;
+	grid-column: 2;
+	grid-row: 1;
+	padding-left: 2em;
+}
+
+.staff_details_name {
+	font-size: 2em;
+	display: block;
+	font-weight: bold;
+}
+.staff_details_organizational_unit {
+	font-size: 1.2em;
+	display: block;
+}
+.staff_details_position, .staff_details_phones, .staff_details_email, .staff_details_location {
+	font-size: 1em;
+	display: block;	
+}
+
+.staff_details_related_items_container {
+	display: block;
+	grid-column: 3;
+	grid-row: 1 ;
+	align-content: right;
+}
+
+.staff_details_related_elements {
+	display: block;
+	border: 2px solid #e0e0e0;
+	background: #f0f0f0;
+	width: 240px;
+	/*vertical-align: middle;*/
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: bold;
+	line-height: 1.2em;
+	margin-right: 0;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 15px;
+}
+
+.staff_details_publications a, .staff_details_projects a, .staff_details_news a {
+	margin: 0;
+	padding: 0;
+}
+.staff_details_publications a:hover, .staff_details_projects a:hover, .staff_details_news a:hover {
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+.staff_details_bio_container {
+	padding: 1.5em;
+	margin-top: 1.5em;
+	/*
+	margin-left: 2em;
+	margin-right: 2em;
+	*/
+	
+	border-left: 1px solid #c0c0c0;
+	border-top: 1px solid #c0c0c0;
+	border-right: 3px solid #e0e0e0;
+	border-bottom: 3px solid #e0e0e0;
+	background: #fff;
+	grid-column: 1 / span 3;
+	grid-row: 2 ;
+}

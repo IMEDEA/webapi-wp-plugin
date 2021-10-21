@@ -37,11 +37,11 @@ add_shortcode('imedea_staff_detail', 'imedea_staff_detail');
 add_action( 'imedea_publication_list', 'imedea_publication_list' );
 add_shortcode('imedea_publication_list', 'imedea_publication_list');
 
-
 add_action( 'imedea_project_list', 'imedea_project_list' );
 add_shortcode('imedea_project_list', 'imedea_project_list');
 
 add_action( 'init', 'register_shortcodes');
+
 
 
 /*

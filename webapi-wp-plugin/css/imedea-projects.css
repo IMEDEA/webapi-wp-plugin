@@ -14,24 +14,17 @@
 	margin-bottom: 1em;
 	line-height: 1.3em;
 	padding-bottom: 0.5em;
-	/*border-radius: 6px;*/
-	display: grid;
-	grid-gap: 2px;
-	grid-template-columns: 200px 1fr;
-	grid-template-rows: auto;
 	justify-content: left;
 	justify-items: left;
 	align-items: center;
 	border: 1px solid #e0e0e0;
-}
+}	
 
 .project_list_image {
 	display: block;
-	height: 50px;
+	height: 80px;
 	margin: 10px;
-	padding: 0;
-	grid-column: 1; 
-	grid-row: 1 ;
+	padding: 10px;
 }
 
 .project_list_title {
@@ -39,44 +32,33 @@
 	font-weight: bold;
 	font-size: 1.2em;
 	color: #00A8E7;
-	/*text-transform: uppercase;*/
 	padding-left: 1em;
 	padding-right: 1em;
-	/*background: #f0f0f0;*/
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	grid-column: 2; 
-	grid-row: 1 ;
 }
 
 .project_list_title:hover {
 	display: block;
-	/*font-weight: bold;*/
 	font-size: 1.2em;
 	color: #000;
-	/*text-transform: uppercase;*/
 	padding-left: 1em;
 	cursor: pointer;
 }
 
 .project_list_code {
 	display: inline;
-	/*padding-left: .5em;*/
-	/*font-size: 0.8em;*/
 }
 .project_list_acronym {
 	display: inline;
 	padding-left: .5em;
-	/*font-size: 0.8em;*/
 }
 .project_list_type {
 	display: inline;
 	padding-left: .5em;
-	/*font-size: 0.8em;*/
 }
 .project_list_code::before { content: ' [ Cod. '; }
 .project_list_acronym::after { content: ' ]'; }
-
 
 .expander {
 	display: inline;
@@ -84,31 +66,21 @@
 	padding-left: .5em;
 	padding-right: .5em;
 	border: none;
-	/*background: #00A8E700;*/
 	border-radius: 4px;
 	color: #000;
 }
 .expander:hover {	
-	/*background: #00A8E7;*/
 	color: #00A8E7;
 }
-
 .project_list_expanded {
-	padding-left: 4em;
-	padding-right: 4em;
+	padding-left: 1em;
+	padding-right: 1em;
 	padding-top: 1em;
 	padding-bottom: 1em;
-	margin-left: 20px;
-	margin-right: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	border-left: 3px solid #00A8E750;
-	border-right: 1px solid #00A8E750;
-	border-radius: 10px;
-	background: #fff;
-	grid-column: 2; 
-	grid-row: 2 ;
-	
 }
 
 .project_list_description {
@@ -117,6 +89,111 @@
 	text-align: justify;
 }
 
+/**
+ * Doing it responsive for >600px display
+ */
+
+@media only screen and (min-width: 600px) {
+		
+	.project_list_item {
+		font-size: 1em;
+		break-inside: avoid-page; /* or 'auto' */
+		margin-bottom: 1em;
+		line-height: 1.3em;
+		padding-bottom: 0.5em;
+		display: grid;
+		grid-gap: 2px;
+		grid-template-columns: 200px 1fr;
+		grid-template-rows: auto;
+		justify-content: left;
+		justify-items: left;
+		align-items: center;
+		border: 1px solid #e0e0e0;
+	}	
+
+	.project_list_image {
+		display: block;
+		height: 50px;
+		margin: 10px;
+		padding: 0;
+		grid-column: 1; 
+		grid-row: 1 ;
+	}
+
+	.project_list_title {
+		display: block;
+		font-weight: bold;
+		font-size: 1.2em;
+		color: #00A8E7;
+		padding-left: 1em;
+		padding-right: 1em;
+		padding-top: 0.5em;
+		padding-bottom: 0.5em;
+		grid-column: 2; 
+		grid-row: 1 ;
+	}
+
+	.project_list_title:hover {
+		display: block;
+		font-size: 1.2em;
+		color: #000;
+		padding-left: 1em;
+		cursor: pointer;
+	}
+
+	.project_list_code {
+		display: inline;
+	}
+	.project_list_acronym {
+		display: inline;
+		padding-left: .5em;
+	}
+	.project_list_type {
+		display: inline;
+		padding-left: .5em;
+	}
+	.project_list_code::before { content: ' [ Cod. '; }
+	.project_list_acronym::after { content: ' ]'; }
+
+
+	.expander {
+		display: inline;
+		margin-left: 1em;
+		padding-left: .5em;
+		padding-right: .5em;
+		border: none;
+		border-radius: 4px;
+		color: #000;
+	}
+	.expander:hover {	
+		color: #00A8E7;
+	}
+
+	.project_list_expanded {
+		padding-left: 4em;
+		padding-right: 4em;
+		padding-top: 1em;
+		padding-bottom: 1em;
+		margin-left: 20px;
+		margin-right: 20px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		border-left: 3px solid #00A8E750;
+		border-right: 1px solid #00A8E750;
+		border-radius: 10px;
+		background: #fff;
+		grid-column: 2; 
+		grid-row: 2 ;
+		
+	}
+
+	.project_list_description {
+		margin-top: 1em;
+		margin-bottom: 1em;
+		text-align: justify;
+	}
+
+}
 
 
 .project_list_link {
@@ -136,7 +213,6 @@
 
 #f_pr_title {
 	width: 15em;
-	/*padding: 0;*/
 	margin-right: 0.5em;
 	height: 1.5em;
 	color: #505050;
@@ -153,4 +229,30 @@
 #f_project_combo {
 	height: 1.5em;
 	margin-right: 0.5em;
+}
+
+
+
+/*
+ * Filters applied display bar styles
+ */
+
+.project_filter_display {
+	display: block;
+	text-align: left;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+.project_search_filter {
+	display: inline;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-left: 2px;
+	margin-right: 2px;	
+	/*background: #D7EAF5A0;*/
+	font-weight: bold;
+	font-size: 1.2em;
+	border-radius: 3px;
 }

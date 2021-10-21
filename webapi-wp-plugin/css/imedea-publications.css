@@ -234,11 +234,11 @@
 
 .publication_filter_display {
 	display: block;
-	text-align: center;
-	margin-top: 0px;
-	margin-bottom: 0px;
+	text-align: left;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
-.search_filter {
+.search_publication_filter {
 	display: inline;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -246,7 +246,9 @@
 	padding-bottom: 5px;
 	margin-left: 2px;
 	margin-right: 2px;	
-	background: #D7EAF5A0;
+	/*background: #D7EAF5A0;*/
+	font-weight: bold;
+	font-size: 1.2em;
 	border-radius: 3px;
 }
 
@@ -257,7 +259,7 @@ button#toggle_filter {
 	text-align: right;
 	background: none;
 	border: none;
-	color: #00A8E7;
+	/*color: #00A8E7;*/	
 	width: 100%;
 }
 button#toggle_filter:hover {
@@ -267,21 +269,24 @@ button#toggle_filter:hover {
 }
 
 div#publications_filter_pannel {
+	display: flex; 
+	justify-content: flex-end;
 	padding: 10px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	background: #D7EAF5A0;
+	/*background: #D7EAF5A0;*/
+	font-size: 0.8em;
 }
 
 div.publications_filter_pannel label{
-	display: inline-block;
+	display: block;
 	white-space: nowrap;
 	padding-right: 5px;
 	color: #00A8E7;
 }
 
 div.publications_filter_pannel input[type=text]{
-	display: inline;
+	display: block;
 	/*padding: 10px;*/
 	border: 2px solid #eee;
 	border-radius: 0px;
@@ -290,7 +295,7 @@ div.publications_filter_pannel input[type=text]{
 	margin-right: 1em;
 }
 div.publications_filter_pannel select{
-	display: inline;
+	display: block;
 	/*padding: 10px;*/
 	border: 2px solid #eee;
 	border-radius: 0px;
@@ -298,18 +303,25 @@ div.publications_filter_pannel select{
 	height: 2em;
 	margin-right: 1em;
 }
-
-div.publications_filter_pannel label, input{
-	display: block;
+.ifilter_field {
+	display: inline-block;
 }
 
 #f_title {
 	width: 15em;
 }
-
 #f_year {
 	width: 6em;
 }
 #f_research_unit {
 	width: 15em;
+}
+
+#ipub_filter_btn {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: none;	
+	cursor: pointer;
+	color: #505050;
 }

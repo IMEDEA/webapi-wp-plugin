@@ -1,5 +1,5 @@
 <?php
-/** 
+/* 
  * Settings page 
  */
  
@@ -39,14 +39,22 @@ function iapi_register_settings() {
 	register_setting( 'iapi_plugin_options', 'iapi_plugin_options', 'iapi_plugin_options_validate');
 	add_settings_section( 'api_settings', 'API Settings', 'iapi_plugin_section_text', 'iapi_plugin' );
 	add_settings_field( 'imedea_webapi_base_url', 'IMEDEA WEBAPI base url', 'imedea_webapi_base_url', 'iapi_plugin', 'api_settings' );
-	add_settings_field( 'pub_detail_page_id', 'Publication details page ID', 'pub_detail_page_id', 'iapi_plugin', 'api_settings' );
+	add_settings_field( 'pub_list_page_id', 'Publication list page ID', 'pub_list_page_id', 'iapi_plugin', 'api_settings' );
+	add_settings_field( 'pub_detail_page_id', 'Publication details page ID (!?)', 'pub_detail_page_id', 'iapi_plugin', 'api_settings' );
+	add_settings_field( 'prj_list_page_id', 'Project list page ID', 'prj_list_page_id', 'iapi_plugin', 'api_settings' );
+	add_settings_field( 'news_list_page_id', 'News list page ID', 'news_list_page_id', 'iapi_plugin', 'api_settings' );
 	add_settings_field( 'staff_detail_page_id', 'Staff details page ID', 'staff_detail_page_id', 'iapi_plugin', 'api_settings' );
 	add_settings_field( 'webapi_pagination_length', 'Pagination length', 'webapi_pagination_length', 'iapi_plugin', 'api_settings' );
+	
+	
 }
 
 function iapi_plugin_options_validate( $input ) {
 	$newinput['webapi_url'] = trim( $input['webapi_url'] );
 	$newinput['pub_detail_page_id'] = trim( $input['pub_detail_page_id'] );
+	$newinput['pub_list_page_id'] = trim( $input['pub_list_page_id'] );
+	$newinput['prj_list_page_id'] = trim( $input['prj_list_page_id'] );
+	$newinput['news_list_page_id'] = trim( $input['news_list_page_id'] );
 	$newinput['staff_detail_page_id'] = trim( $input['staff_detail_page_id'] );
 	$newinput['webapi_pagination_length'] = trim( $input['webapi_pagination_length'] );
 	return $newinput;
@@ -54,22 +62,33 @@ function iapi_plugin_options_validate( $input ) {
 
 function imedea_webapi_base_url() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='imedea_webapi_base_url' name='iapi_plugin_options[webapi_url]' type='text' value='" . esc_attr( $options['webapi_url'] ) . "' />";
+    echo "<input id='imedea_webapi_base_url' name='iapi_plugin_options[webapi_url]' type='text' value='" . esc_attr( $options['webapi_url'] ) . "' style='width: 30em;' />";
 }
 
 function pub_detail_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='pub_detail_page_id' name='iapi_plugin_options[pub_detail_page_id]' type='text' value='" . esc_attr( $options['pub_detail_page_id'] ) . "' />";
+    echo "<input id='pub_detail_page_id' name='iapi_plugin_options[pub_detail_page_id]' type='text' value='" . esc_attr( $options['pub_detail_page_id'] ) . "' style='width: 5em;' />";
 }
-
+function pub_list_page_id() {
+    $options = get_option( 'iapi_plugin_options' );
+    echo "<input id='pub_list_page_id' name='iapi_plugin_options[pub_list_page_id]' type='text' value='" . esc_attr( $options['pub_list_page_id'] ) . "' style='width: 5em;' />";
+}
+function prj_list_page_id() {
+    $options = get_option( 'iapi_plugin_options' );
+    echo "<input id='prj_list_page_id' name='iapi_plugin_options[prj_list_page_id]' type='text' value='" . esc_attr( $options['prj_list_page_id'] ) . "' style='width: 5em;' />";
+}
+function news_list_page_id() {
+    $options = get_option( 'iapi_plugin_options' );
+    echo "<input id='news_list_page_id' name='iapi_plugin_options[news_list_page_id]' type='text' value='" . esc_attr( $options['news_list_page_id'] ) . "' style='width: 5em;' />";
+}
 function staff_detail_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='staffdetail_page_id' name='iapi_plugin_options[staff_detail_page_id]' type='text' value='" . esc_attr( $options['staff_detail_page_id'] ) . "' />";
+    echo "<input id='staffdetail_page_id' name='iapi_plugin_options[staff_detail_page_id]' type='text' value='" . esc_attr( $options['staff_detail_page_id'] ) . "' style='width: 5em;' />";
 }
 
 function webapi_pagination_length() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='webapi_pagination_length' name='iapi_plugin_options[webapi_pagination_length]' type='text' value='" . esc_attr( $options['webapi_pagination_length'] ) . "' />";
+    echo "<input id='webapi_pagination_length' name='iapi_plugin_options[webapi_pagination_length]' type='text' value='" . esc_attr( $options['webapi_pagination_length'] ) . "' style='width: 5em;' />";
 }
 
 ?>

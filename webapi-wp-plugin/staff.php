@@ -1,4 +1,7 @@
 <?php
+/**
+ * Staff functions
+ */
 
 function imedea_staff_list( $atts ){
 		// get attibutes and set defaults
@@ -85,32 +88,61 @@ function imedea_staff_detail( $atts ){
 	
 	$iapi_plugin_options = get_option('iapi_plugin_options');
 	$webapi_url = $iapi_plugin_options['webapi_url'];
+	$pubs_page_id = $iapi_plugin_options['pub_list_page_id'];
+	$prjs_page_id = $iapi_plugin_options['prj_list_page_id'];
+	$news_page_id = $iapi_plugin_options['news_list_page_id'];
 	
 	ob_start();
 	
-	$txt_shortcode = '
-		[jsoncontentimporter url='.$webapi_url.'/people/'.$person_id.' basenode=data]
-		<div style="position:relative; margin:0px 0px 0px 0px; float:left; border:0px solid #F00; width:100%;">
-		<div style="position:relative; margin:0px 0px 0px 0px; float:left; border:0px solid #F00; width:20%;">
-			<img src="{photo_url_small}" width="300px" style="padding:10px; border:1px solid #CCC;" />
-		</div>
-		<div style="position:relative; margin:0px 0px 0px 50px; float:left; border:0px solid #F00; width:55%;">
-		<table style="width:100%">
-		<tr><td class="peo_det_name"style="font-size:30px;">{name}<br/></td></tr>
-		<tr><td class="peo_det_department">{department_es}</td></tr>
-		<tr><td class="peo_det_position">{position}</td></tr>
-		<tr><td class="peo_det_phone"><b>Teléfono(s): </b>{subloop-array:phones:10}{0}{1:ifNotEmptyAddLeft:, }{/subloop-array:phones} &nbsp;&nbsp;<span class="peo_det_email"><b>email: </b><a href="mailto:{email}">{email}</a></span></td></tr>
-		<tr><td class="peo_det_location"><b>Despacho: </b> {location_short_name}</td></tr>
-		</table></div>
-		<div style="position:relative; margin:0px 0px 0px 25px; padding:10px; float:left; border:0px solid #FF0; height:auto; background-color:#DDD;">
-		<b><a href="?page_id='.$page_id.'&person_id='.$person_id.'&show_pub_list=true&show_pro_list=false">Mis Publicaciones ({publications})</a></b><br/><br/>
-		<b><a href="?page_id='.$page_id.'&person_id='.$person_id.'&show_pub_list=false&show_pro_list=true">Mis Proyectos ({projects})</a></b><br/><br/>
-		</div>
-		</div>
-		[/jsoncontentimporter]
-		';
-	echo do_shortcode($txt_shortcode);
-
+	$pd = getJSONData($webapi_url."/people/".$person_id)['data'][0];
+	echo "<div class='staff_details_container'>";
+	echo "<div class='staff_details_photo_container'>";
+	echo "<img src='".$pd['photo_url_small']."' class='staff_details_photo' />";
+	echo "</div>";
+	echo "<div class='staff_details_info_container'>";
+	echo "  <div class='staff_details_name'>".$pd['name']."</div>";	
+	echo "  <div class='staff_details_organizational_unit'>".$pd['department_es']."</div>";
+	echo "  <div class='staff_details_research_unit'>".$pd['research_unit_name_es']."</div>";
+	echo "  <div class='staff_details_position'>".$pd['position']."</div>";
+	if (sizeof($pd['phones']) > 0) {
+				echo "<div class='staff_details_phones'><i class='fas fa-phone'></i> ";
+				foreach( $pd['phones'] as $p => $phone ){
+					echo $phone;
+					if ( isset($phones[$p + 1]) ) echo ", ";
+				}
+				echo "</div>"; 
+			}
+	echo "  <div class='staff_details_email'><i class='fas fa-envelope'></i> ".$pd['email']."</div>";
+	if (!empty(trim($pd['location']))){
+		echo "<div class='staff_details_location'><i class='fas fa-door-open'></i> ".$pd['location'].
+			" (Sala: ".$pd['location_short_name'].")</div>";	
+	}
+	if (!empty(trim($pd['web_page']))){
+		echo "<div class='staff_details_location'><i class='fas fa-link'></i> <a href='".$pd['web_page']."' title='Página web personal'>".$pd['web_page']."</a></div>";	
+	}
+	echo "</div>";
+	echo "<div class='staff_details_related_items_container'>";
+	if ($pd['publications']>0){
+		echo "    <div class='staff_details_related_elements staff_details_publications'>
+		<a href='?page_id=".$pubs_page_id."&person_id=".$person_id."'>
+		<i class='fas fa-book'></i> Publicaciones</a></div>";
+	}
+	if ($pd['projects']>0){
+		echo "    <div class='staff_details_related_elements staff_details_projects'>
+		<a href='?page_id=".$prjs_page_id."&person_id=".$person_id."'>
+		<i class='fas fa-project-diagram'></i> Proyectos</a></div>";
+	}
+	if($pd['news_posts']){
+		echo "    <div class='staff_details_related_elements staff_details_news'>
+		<a href='?page_id=".$news_page_id."&person_id=".$person_id."'>
+		<i class='fas fa-quote-right'></i> Noticias</a></div>";	
+	}
+	echo "</div>";
+	if(!empty(trim($pd['about_es']))){
+		echo "<div class='staff_details_bio_container'>".$pd['about_es']."</div>" ;
+	}
+	echo "</div>";
+	
 	return ob_get_clean();
 }
 
