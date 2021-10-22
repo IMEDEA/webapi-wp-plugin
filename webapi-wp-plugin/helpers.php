@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common functions and procedures used everywhere
- */
-
-
 /*
  * Put json data from url address to array
  */
@@ -145,12 +140,5 @@ function clearCTA($text){
 	return $text;
 }
 
-function getStaffName($person_id){
-	$iapi_plugin_options = get_option('iapi_plugin_options');
-	$webapi_url = $iapi_plugin_options['webapi_url'];	
-	$pd = getJSONData($webapi_url."/people/".$person_id)['data'][0];
-	
-	return $pd['name'];
-}
 
 ?>

@@ -1,0 +1,6 @@
+#imedea_webapi_base_url {
+  width: 30em;
+}
+#pub_detail_page_id, #pub_list_page_id, #prj_list_page_id, #news_list_page_id, #staffdetail_page_id, #webapi_pagination_length {
+  width: 5em;
+}

@@ -1,7 +1,4 @@
 <?php
-/**
- * Staff functions
- */
 
 function imedea_staff_list( $atts ){
 		// get attibutes and set defaults
@@ -146,4 +143,15 @@ function imedea_staff_detail( $atts ){
 	return ob_get_clean();
 }
 
+/**
+ * Staff specific helper functions
+ */
+
+function getStaffName($person_id){
+	$iapi_plugin_options = get_option('iapi_plugin_options');
+	$webapi_url = $iapi_plugin_options['webapi_url'];	
+	$pd = getJSONData($webapi_url."/people/".$person_id)['data'][0];
+	
+	return $pd['name'];
+}
 ?>

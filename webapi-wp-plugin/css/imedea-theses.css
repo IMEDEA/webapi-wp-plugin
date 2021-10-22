@@ -1,0 +1,91 @@
+.theses_list {
+	padding: 0;
+	list-style-type: none;  
+	margin-left: 3em;
+	margin-right: 3em;
+}
+.theses_list_item {
+	font-size: 1em;
+	margin-bottom: 1.5em;
+	line-height: 1.3em;
+	padding-left: 0.5em;
+	/*padding-bottom: 0.5em;*/
+	border-left: 8px solid #00A8E750;
+	/*border-bottom: 1px solid #00A8E750;*/
+}
+.theses_list_type {
+	display: block;
+	font-style: italic;
+	padding-bottom: 5px;
+	font-size: 0.9em;
+	color: #707070;
+}
+.theses_list_date {
+	display: inline-block;
+	width: 100px;
+	border:0;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	text-align: left;
+}
+.theses_list_title {
+	display: inline-block;
+	width: 90%;
+	font-size: 1.1em;
+	border:0;
+	padding-left: 0;
+	padding-bottom: 5px;
+	margin-left: 0;
+	text-align: left;
+	font-weight: bold;
+	color: #00A8E7;
+}
+.theses_list_author {
+	display: block;
+	padding-left: 100px;
+	padding-bottom: 5px;
+	margin: 0;
+}
+.theses_list_codirectors {
+	display: block;	
+	padding-left: 100px; 
+	padding-bottom: 5px;
+	margin:0;
+}
+.theses_list_university {
+	display: block;	
+	padding-left: 100px;
+	margin:0;
+}
+
+/**
+ * Filter pannel
+ */
+.theses_filter_pannel {
+	display: flex; 
+	justify-content: flex-end;
+	margin-top: 1em;
+	margin-right: 30px;
+}
+
+#f_th_title {
+	width: 15em;
+	margin-right: 0.5em;
+	height: 1.5em;
+	color: #505050;
+}
+
+#theses_filter_btn {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: none;	
+	cursor: pointer;
+	color: #505050;
+}
+#f_thesis_type {
+	margin-right: 0.5em;
+	height: 1.5em;
+	color: #505050;
+}

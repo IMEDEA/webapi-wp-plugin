@@ -62,33 +62,33 @@ function iapi_plugin_options_validate( $input ) {
 
 function imedea_webapi_base_url() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='imedea_webapi_base_url' name='iapi_plugin_options[webapi_url]' type='text' value='" . esc_attr( $options['webapi_url'] ) . "' style='width: 30em;' />";
+    echo "<input id='imedea_webapi_base_url' name='iapi_plugin_options[webapi_url]' type='text' value='" . esc_attr( $options['webapi_url'] ) . "' />";
 }
 
 function pub_detail_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='pub_detail_page_id' name='iapi_plugin_options[pub_detail_page_id]' type='text' value='" . esc_attr( $options['pub_detail_page_id'] ) . "' style='width: 5em;' />";
+    echo "<input id='pub_detail_page_id' name='iapi_plugin_options[pub_detail_page_id]' type='text' value='" . esc_attr( $options['pub_detail_page_id'] ) . "' />";
 }
 function pub_list_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='pub_list_page_id' name='iapi_plugin_options[pub_list_page_id]' type='text' value='" . esc_attr( $options['pub_list_page_id'] ) . "' style='width: 5em;' />";
+    echo "<input id='pub_list_page_id' name='iapi_plugin_options[pub_list_page_id]' type='text' value='" . esc_attr( $options['pub_list_page_id'] ) . "' />";
 }
 function prj_list_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='prj_list_page_id' name='iapi_plugin_options[prj_list_page_id]' type='text' value='" . esc_attr( $options['prj_list_page_id'] ) . "' style='width: 5em;' />";
+    echo "<input id='prj_list_page_id' name='iapi_plugin_options[prj_list_page_id]' type='text' value='" . esc_attr( $options['prj_list_page_id'] ) . "' />";
 }
 function news_list_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='news_list_page_id' name='iapi_plugin_options[news_list_page_id]' type='text' value='" . esc_attr( $options['news_list_page_id'] ) . "' style='width: 5em;' />";
+    echo "<input id='news_list_page_id' name='iapi_plugin_options[news_list_page_id]' type='text' value='" . esc_attr( $options['news_list_page_id'] ) . "'  />";
 }
 function staff_detail_page_id() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='staffdetail_page_id' name='iapi_plugin_options[staff_detail_page_id]' type='text' value='" . esc_attr( $options['staff_detail_page_id'] ) . "' style='width: 5em;' />";
+    echo "<input id='staffdetail_page_id' name='iapi_plugin_options[staff_detail_page_id]' type='text' value='" . esc_attr( $options['staff_detail_page_id'] ) . "' />";
 }
 
 function webapi_pagination_length() {
     $options = get_option( 'iapi_plugin_options' );
-    echo "<input id='webapi_pagination_length' name='iapi_plugin_options[webapi_pagination_length]' type='text' value='" . esc_attr( $options['webapi_pagination_length'] ) . "' style='width: 5em;' />";
+    echo "<input id='webapi_pagination_length' name='iapi_plugin_options[webapi_pagination_length]' type='text' value='" . esc_attr( $options['webapi_pagination_length'] ) . "' />";
 }
 
 ?>

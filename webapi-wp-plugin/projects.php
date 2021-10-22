@@ -1,10 +1,4 @@
 <?php
-
-/**
- * Projects functions
- * Current projects by default
- */
-
 function imedea_project_list( $atts ){
 	// get attibutes and set defaults
 	extract(shortcode_atts(array(
@@ -75,8 +69,13 @@ function get_projects($webapi_url, $page_length, $research_unit_id, $year, $type
 		echo "<div class='project_list_duration'><span class='dashicons dashicons-clock'></span> Duración: ".$pr['duration']."</div>";
 		echo "<div class='project_list_description'>".$pr['description']."</div>";		
 		echo "<div class='project_list_related_groups' title='Grupo(s) de investigación'><span class='dashicons dashicons-image-filter'></span> ";
-		foreach ($pr['related_research_units'] as $ru){
+		$ru_count = sizeof($pr['related_research_units']);
+		for ($i = 0; $i < $ru_count; $i++) {
+			$ru = $pr['related_research_units'][$i];
 			echo "<span class='project_list_related_ru'>".$ru['name_es']."</span>";
+			if ($i < $ru_count -1 ){
+				echo ", ";
+			}
 		}
 		echo "</div>";
 		echo "<div class='project_list_related_people' title='Participantes'><span class='dashicons dashicons-groups'></span> Participantes: ";
@@ -93,7 +92,7 @@ function get_projects($webapi_url, $page_length, $research_unit_id, $year, $type
 			$link = $pr['url'];
 			echo "<div class='project_list_link'><span class='dashicons dashicons-admin-links'></span><a href='".$link."'> ".$link."</a></div>";
 		}
-		echo "<div class='project_list_related_publications'><span class='dashicons dashicons-media-document'></span> <a href='?page_id=435&project_id=".$pr['id']."'>Publicaciones relacionadas</a></div>";
+		echo "<div class='project_list_related_publications' title='Publicaciones'><span class='dashicons dashicons-media-document'></span> <a href='?page_id=435&project_id=".$pr['id']."'>Publicaciones relacionadas</a></div>";
 		echo "</div>";
 		echo "</div>";
 		echo "</li>";
